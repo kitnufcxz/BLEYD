@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLEYD Визитка</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="family-messages"></div>
+
+    <div class="particles" id="particles"></div>
+    <div class="cursor"></div>
+    
+    <!-- <img class="logo-image" src="image1.png" alt="Логотип">-->
+    
+    <div class="images-container">
+    </div>
+    
+    <img class="main-image" src="image.jpg" alt="Основное изображение">
+    
+    <div class="title">BLEYD</div>
+    
+    <div class="bro-text">My bro:</div>
+    
+    <div class="tg-links">
+        <a href="https://t.me/lirika70gm" class="tg-button"><span>User 1</span></a>
+        <a href="https://t.me/psychogung7" class="tg-button"><span>User 2</span></a>
+        <a href="https://t.me/vovshyk_61" class="tg-button"><span>User 3</span></a>
+        <a href="https://t.me/Bstwb" class="tg-button"><span>User 4</span></a>
+    </div>
+    
+    <div class="channel-link">
+        <a href="https://t.me/+pn1KHPAvHQgxNWIy" class="channel-button"><span>my tgk</span></a>
+    </div>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 100;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        function createFamilyMessages() {
+            const container = document.querySelector('.family-messages');
+            const messages = [
+                "че папе?", "че маме?", "че бабке в тапки?", "чем ебали?",
+                "че в хуй?", "че с хуя?", "кто ебал тебя?", "имя ебаря?",
+                "кто плюет в тебя?", "сосал?", "че бате под сменой?", "че отцу в хуй я мама твоя",
+                "куда садили?", "кто ссал на тебя?", "чьим хуем тебя ебали?", "че папе? ещё раз че гею?",
+                "вопрос в хуй?", "че маме?", "че бабке в тапки?", "че деду в кеды?",
+                "че папе?", "че маме?", "че бабке в тапки?", "че деду в кеды?",
+                "кто ты перед пацанами?", "у всех твоё лицо что в хуй?", "че бабке в тапки?", "че деду в кеды?"
+            ];
+            
+            const gridCols = 10;
+            const gridRows = 8;
+            const cellWidth = 100 / gridCols;
+            const cellHeight = 100 / gridRows;
+            
+            const occupiedCells = new Array(gridCols * gridRows).fill(false);
+            
+            messages.forEach((text, index) => {
+                const message = document.createElement('div');
+                message.classList.add('family-message');
+                message.textContent = text;
+                
+                let col, row, cellIndex;
+                do {
+                    col = Math.floor(Math.random() * gridCols);
+                    row = Math.floor(Math.random() * gridRows);
+                    cellIndex = row * gridCols + col;
+                } while (occupiedCells[cellIndex]);
+                
+                occupiedCells[cellIndex] = true;
+                
+                const posX = col * cellWidth + (Math.random() * 10 + 5);
+                const posY = row * cellHeight + (Math.random() * 10 + 5);
+                
+                message.style.left = `${posX}%`;
+                message.style.top = `${posY}%`;
+                
+                const animationType = Math.floor(Math.random() * 3) + 1;
+                const duration = 12 + Math.random() * 6;
+                const delay = Math.random() * 5;
+                
+                message.style.animation = `float${animationType} ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(message);
+            });
+        }
+        
+        createParticles();
+        createFamilyMessages();
+        
+        if (matchMedia('(pointer: fine)').matches) {
+            const cursor = document.querySelector('.cursor');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            const interactiveElements = document.querySelectorAll('a, button, img');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(1.5)';
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                });
+            });
+        } else {
+            document.querySelector('.cursor')?.remove();
+        }
+    </script>
+</body>
+</html>
